@@ -5,6 +5,8 @@ import { firebase, googleAuthProvider } from '../firebase/firebase.config';
 export const loginWithEmailPassword = (email, password) => {
     return (dispatch) => {
 
+        console.log(email, password)
+
         setTimeout(() => {
             dispatch( loginAction( 12445, 'Jose Arcadio' ) );
         }, 3000);
