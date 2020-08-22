@@ -5,6 +5,7 @@ import validator from 'validator';
 
 import {useForm} from '../../hooks/useForm';
 import { loginWithEmailPassword } from '../../actions/auth';
+import { setError, removeError } from '../../actions/ui';
 
 export const RegisterScreen = () => {
 
@@ -31,20 +32,21 @@ export const RegisterScreen = () => {
     const isFormValid = () => {
 
         if (name.trim().length <= 2 ) {
-            console.log('Name is required')
+            dispatch( setError('Name is required') );
             return false;
         }
         
         if ( !validator.isEmail(email) ) {
-            console.log('Email not valid')
+            dispatch( setError('Email not valid') );
             return false;
         }
         
         if (password !== password2 || password.length <= 4) {
-            console.log('Password should be more than 4 characters and match each other')
+            dispatch( setError('Password should be more than 4 characters and match each other') );
             return false;
         }
 
+        dispatch( removeError() );
         return true;
     }
 
