@@ -23,7 +23,7 @@ export const LoginScreen = () => {
         e.preventDefault();
 
         dispatch( loginWithEmailPassword(email, password) );
-        // history.replace('/');
+        history.replace('/');
         
     }
 
