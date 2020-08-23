@@ -102,8 +102,9 @@ export const RegisterScreen = () => {
                 <button
                     type="submit"
                     className="btn btn-primary btn-block mb-5"
+                    disabled={ui.loading}
                 >
-                    Register
+                    {ui.loading ? <i className="fas fa-spinner animate__animated animate__rotateIn"></i> : 'Register'}
                 </button>
 
                

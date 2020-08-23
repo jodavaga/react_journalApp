@@ -8,7 +8,7 @@ import { loginWithEmailPassword, startGoogleLogin } from '../../actions/auth';
 export const LoginScreen = () => {
 
     const history = useHistory();
-    const {msgError} = useSelector(state => state.ui);
+    const {msgError, loading} = useSelector(state => state.ui);
 
     const dispatch = useDispatch();
     
@@ -62,8 +62,9 @@ export const LoginScreen = () => {
                 <button
                     type="submit"
                     className="btn btn-primary btn-block"
+                    disabled={loading}
                 >
-                    Login
+                   {loading ? <i className="fas fa-spinner animate__animated animate__rotateIn"></i> : 'Login'}
                 </button>
 
                 
