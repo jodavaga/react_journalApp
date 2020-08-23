@@ -1,19 +1,23 @@
 import { types } from '../types/types';
 import { firebase, googleAuthProvider } from '../firebase/firebase.config';
+import { setError, removeError } from './ui';
 
 // Async action (fetch, http)
 export const loginWithEmailPassword = (email, password) => {
     return (dispatch) => {
 
-        console.log(email, password)
-
-        setTimeout(() => {
-            dispatch( loginAction( 12445, 'Jose Arcadio' ) );
-        }, 3000);
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then( ({user}) => {
+                dispatch( removeError() );
+                dispatch( loginAction( user.uid, user.displayName ) );
+            })
+            .catch(e => {
+                dispatch( setError('Wrong Email or Password') );
+            })
     }
 }
 
-export const startLoginWithEmailPassName = (email, password, name) => {
+export const startRegisterWithEmailPassName = (email, password, name) => {
     return (dispatch) => {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then( async ({user}) =>  {
