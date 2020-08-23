@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import validator from 'validator';
 
@@ -10,27 +10,30 @@ import { setError, removeError } from '../../actions/ui';
 export const RegisterScreen = () => {
 
     const dispatch = useDispatch();
-
+    
+    const {ui} = useSelector(state => state);
+    console.log(ui.msgError)
+    
     const [formValues, handleInputChange] = useForm({
         name: 'jose D',
         email: 'test@mail.com',
         password: '12345',
         password2: '12345'
     });
-
+    
     const { name, email, password, password2 } = formValues;
-
+    
     const handleRegister = (e) => {
         e.preventDefault();
-
+        
         if (isFormValid()) {
             return dispatch(loginWithEmailPassword(email, password));
         } 
         
     }
-
+    
     const isFormValid = () => {
-
+        
         if (name.trim().length <= 2 ) {
             dispatch( setError('Name is required') );
             return false;
@@ -45,7 +48,7 @@ export const RegisterScreen = () => {
             dispatch( setError('Password should be more than 4 characters and match each other') );
             return false;
         }
-
+        
         dispatch( removeError() );
         return true;
     }
@@ -55,7 +58,7 @@ export const RegisterScreen = () => {
             <h3 className="auth__title">Register</h3>
 
 
-            { !isFormValid() && <div className="auth__alert-error">  Hubo un error </div> }
+            { ui.msgError && <div className="auth__alert-error">  {ui.msgError} </div> }
             <form onSubmit={handleRegister}>
 
                 <input 
