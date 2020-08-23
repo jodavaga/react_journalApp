@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import validator from 'validator';
 
 import {useForm} from '../../hooks/useForm';
-import { loginWithEmailPassword } from '../../actions/auth';
+import { startLoginWithEmailPassName } from '../../actions/auth';
 import { setError, removeError } from '../../actions/ui';
 
 export const RegisterScreen = () => {
@@ -12,13 +12,12 @@ export const RegisterScreen = () => {
     const dispatch = useDispatch();
     
     const {ui} = useSelector(state => state);
-    console.log(ui.msgError)
     
     const [formValues, handleInputChange] = useForm({
         name: 'jose D',
         email: 'test@mail.com',
-        password: '12345',
-        password2: '12345'
+        password: '123456',
+        password2: '123456'
     });
     
     const { name, email, password, password2 } = formValues;
@@ -27,7 +26,7 @@ export const RegisterScreen = () => {
         e.preventDefault();
         
         if (isFormValid()) {
-            return dispatch(loginWithEmailPassword(email, password));
+            return dispatch(startLoginWithEmailPassName(email, password, name));
         } 
         
     }
@@ -44,8 +43,8 @@ export const RegisterScreen = () => {
             return false;
         }
         
-        if (password !== password2 || password.length <= 4) {
-            dispatch( setError('Password should be more than 4 characters and match each other') );
+        if (password !== password2 || password.length < 6) {
+            dispatch( setError('Password should be more than 6 characters and match each other') );
             return false;
         }
         
